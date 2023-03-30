@@ -1,0 +1,18 @@
+﻿---
+BasedOnStyle: WebKit
+AlignAfterOpenBracket: AlwaysBreak
+AlignConsecutiveMacros: 'true'
+BreakBeforeBraces: Attach
+BreakStringLiterals: 'false'
+CompactNamespaces: 'true'
+Cpp11BracedListStyle: 'false'
+FixNamespaceComments: 'false'
+IncludeBlocks: Regroup
+Language: Cpp
+NamespaceIndentation: All
+ReflowComments: 'false'
+SortIncludes: 'true'
+TabWidth: '4'
+UseTab: Always
+
+...

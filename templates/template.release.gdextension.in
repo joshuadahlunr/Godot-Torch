@@ -1,0 +1,9 @@
+[configuration]
+
+entry_symbol = "GDExtensionInit"
+
+[libraries]
+
+linux.release.x86_64 = "build/${PROJECT_NAME}/lib/Linux-x86_64/lib${PROJECT_NAME}.so"
+macos.release = "build/${PROJECT_NAME}/lib/Darwin-universal/lib${PROJECT_NAME}.dylib"
+windows.release.x86_64 = "build/${PROJECT_NAME}/lib/Windows-AMD64/${LIB_PREFIX}${PROJECT_NAME}.dll"

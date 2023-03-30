@@ -1,0 +1,4 @@
+CMakeLists.txt.user
+.vscode
+build
+!build/GDExtensionTemplate/GDExtensionTemplate.gdextension
