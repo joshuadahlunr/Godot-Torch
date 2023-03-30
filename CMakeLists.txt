@@ -92,3 +92,23 @@ add_subdirectory(thirdparty/godot-cpp)
 set_target_properties(godot-cpp PROPERTIES CXX_VISIBILITY_PRESET hidden)    # visibility needs to be the same as the main library
 
 target_link_libraries(${PROJECT_NAME} PRIVATE godot-cpp)
+
+# libtorch
+# From here: https://github.com/pytorch/pytorch
+# Seperately build libtorch (doesn't play nice with being built as a subdirectory so it has to be done seperately!)
+if(NOT BUILT_TORCH)
+	file(REMOVE_RECURSE "${CMAKE_CURRENT_SOURCE_DIR}/thirdparty/pytorch/runtime")
+	execute_process(COMMAND "${CMAKE_CURRENT_SOURCE_DIR}/torch_runtime.sh" WORKING_DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}")
+	set(BUILT_TORCH TRUE CACHE BOOL "Has torch been built?" FORCE)
+endif()
+
+# Below will append libtorch to path so CMake can see files
+set(LIBTORCH "${CMAKE_CURRENT_SOURCE_DIR}/thirdparty/pytorch/runtime/install/share/cmake/Torch")
+set(CMAKE_PREFIX_PATH "${CMAKE_PREFIX_PATH};${LIBTORCH}")
+
+# Find torch + vulkan and add them as dependencies!
+find_package(Torch REQUIRED)
+find_package(Vulkan REQUIRED)
+set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} ${TORCH_CXX_FLAGS}")
+target_link_libraries(${PROJECT_NAME} PUBLIC ${TORCH_LIBRARIES} ${Vulkan_LIBRARIES})
+target_include_directories(${PROJECT_NAME} PUBLIC ${Vulkan_INCLUDE_DIRS} ${TORCH_INCLUDE_DIRS})
